@@ -1,0 +1,245 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "VisualContainer5",
+  "position": {
+    "x": 800.0,
+    "y": 70.0,
+    "z": 4,
+    "height": 350.0,
+    "width": 450.0
+  },
+  "visual": {
+    "name": "e5f6g7h8i9j0k1l2m3n4",
+    "displayName": "Enrollment by Attendance",
+    "description": "Donut chart showing enrollment by attendance",
+    "ordinal": 4,
+    "state": {
+      "CustomVisualComponent": {
+        "properties": {
+          "General": {
+            "properties": {
+              "Title": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Enrollment by Attendance'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VisualType": {
+        "expr": {
+          "Literal": {
+            "Value": "'multiRowCard'"
+          }
+        }
+      },
+      "Categories": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Category\":\"Attendance\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Attendance\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Attendance\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Day_10\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Attendance\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Attendance\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Attendance\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "YAxes": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Y\":\"Students\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Tooltip": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Tooltip\":\"Percent of Students A\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Percent of Students A\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

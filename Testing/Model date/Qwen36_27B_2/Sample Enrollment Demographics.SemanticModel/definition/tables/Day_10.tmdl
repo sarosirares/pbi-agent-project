@@ -1,0 +1,282 @@
+table Day_10
+	lineageTag: 05baa755-6cf2-4567-96bc-0b7cd1cb86c5
+
+	measure Students = DISTINCTCOUNT('Day_10'[Student ID])
+		formatString: #,0
+		lineageTag: 6e975ca7-5c95-4a03-912b-506f15966bcf
+
+	measure Select_State = IF(HASONEVALUE('Day_10'[appState]), FIRSTNONBLANK('Day_10'[appState], TRUE) & " Residents Are Enrolled in the Degrees Shown Below", "Click on a State Below for that State's Enrollment by Degree")
+		lineageTag: 374d414d-13db-479a-b9c6-c71b7cbbe96a
+
+	measure Select_Degree = IF(HASONEVALUE('Day_10'[Degree]), FIRSTNONBLANK('Day_10'[Degree], TRUE) & " by Race/Ethnicity", "Enrollment by Degree and Race/Ethnicity")
+		lineageTag: 495ab7dd-2886-4078-9dd1-42c27480eee9
+
+	measure 'Top Title' = ```
+			
+			IF(HASONEVALUE(Day_10[School Year]), "School Year: " & FIRSTNONBLANK(Day_10[School Year], TRUE)&"", "") 
+			& IF(HASONEVALUE(Day_10[Quarter]), ", Term: " & FIRSTNONBLANK(Day_10[Quarter], TRUE)&"", "") 
+			& IF(HASONEVALUE(Day_10[School]), ", School: " & FIRSTNONBLANK(Day_10[School], TRUE)&"", "") 
+			& IF(HASONEVALUE(Day_10[Academic Level]), ", Level: "  & FIRSTNONBLANK(Day_10[Academic Level], TRUE),"")
+			& IF(HASONEVALUE(Day_10[Degree]), ", Degree: "  & FIRSTNONBLANK(Day_10[Degree], TRUE),"")
+			& IF(HASONEVALUE(Day_10[ftpt]), ", Attendance: "   &  FIRSTNONBLANK(Day_10[ftpt], TRUE),"")
+			& IF(HASONEVALUE(Day_10[Race/Ethnicity]), ", Race/Ethnicity: "  &  FIRSTNONBLANK(Day_10[Race/Ethnicity], TRUE),"")  
+			& IF(HASONEVALUE(Day_10[age Group]), ", Age Group: "   &  FIRSTNONBLANK(Day_10[age Group], TRUE),"")
+			& IF(HASONEVALUE(Day_10[Gender]), ", Gender: "   &  FIRSTNONBLANK(Day_10[Gender], TRUE),"")
+			& IF(HASONEVALUE(Day_10[Citizenship]), ", Citizenship: "   &  FIRSTNONBLANK(Day_10[Citizenship], TRUE),"")
+			```
+		lineageTag: cdf52c8a-f249-4aa0-9d06-b4b66c9ac13b
+
+	measure Tip = "Right click on a bar in the chart to drill down. Three levels are available."
+		lineageTag: 89aeac32-f200-4a00-a3e6-f2563c15ad1e
+
+	measure 'Students All' = CALCULATE([Students],ALLEXCEPT(Day_10,Day_10[School Year]))
+		formatString: 0
+		lineageTag: 86fedbdc-c306-43e0-af11-52834c46f813
+
+	measure 'Percent of Students' = [Students]/[Students_All]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: dbf8c9f7-5f7e-4c2f-ac30-5c705f983e51
+
+	measure Students_All = CALCULATE([Students],ALLEXCEPT(Day_10,Day_10[School Year],Day_10[School],Day_10[Age Group],Day_10[Academic Level],Day_10[Attendance],Day_10[Gender],Day_10[Citizenship]))
+		formatString: 0
+		lineageTag: 9563fc33-99d8-4880-b48c-3f6a79eed40d
+
+	measure 'Percent of_Students' = [Students]/[Students All]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b8c49cb6-e078-490d-84ff-fcdb743a7db3
+
+		changedProperty = FormatString
+
+	measure 'Students_All AG' = CALCULATE([Students],ALLEXCEPT(Day_10,Day_10[School Year],Day_10[School],Day_10[Race/Ethnicity],Day_10[Academic Level],Day_10[Attendance],Day_10[Gender],Day_10[Citizenship],Day_10[Location]))
+		formatString: 0
+		lineageTag: 0b97d3eb-47d1-4e5f-a1a3-6fe2671af643
+
+	measure 'Percent of Students AG' = [Students]/[Students_All AG]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1f4e1e4a-72fe-4458-abd5-45de82fba2a5
+
+		changedProperty = FormatString
+
+	measure 'Students_All A' = CALCULATE([Students],ALLEXCEPT(Day_10,Day_10[School Year],Day_10[School],Day_10[Race/Ethnicity],Day_10[Academic Level],Day_10[Age Group],Day_10[Gender],Day_10[Citizenship]))
+		formatString: 0
+		lineageTag: 78a3b177-8396-49cd-ae79-7d2ccee01a62
+
+	measure 'Percent of Students A' = [Students]/[Students_All A]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6d35994b-75a6-4d74-817f-f236be15110e
+
+		changedProperty = FormatString
+
+	column 'Student ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e7f28c9-0943-4497-a12a-cf8537fa6974
+		summarizeBy: count
+		sourceColumn: Student ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column academicQuarter
+		dataType: int64
+		lineageTag: af25a049-65db-4b5e-b6ff-6822f71bf94e
+		summarizeBy: sum
+		sourceColumn: academicQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hispanic
+		dataType: string
+		lineageTag: 2b69923d-06ae-4b40-bb43-3ffd7758157f
+		summarizeBy: none
+		sourceColumn: hispanic
+
+		annotation SummarizationSetBy = Automatic
+
+	column appState
+		dataType: string
+		lineageTag: 4a41ef2a-a8b2-4edd-8e21-64063754ca14
+		summarizeBy: none
+		sourceColumn: appState
+
+		annotation SummarizationSetBy = Automatic
+
+	column appNation
+		dataType: string
+		lineageTag: 841b4f99-49ad-4620-9ff0-d9b17763e3e7
+		summarizeBy: none
+		sourceColumn: appNation
+
+		annotation SummarizationSetBy = Automatic
+
+	column appZip
+		dataType: string
+		lineageTag: d893ed8d-e98a-461f-829b-de84d48cd35b
+		summarizeBy: none
+		sourceColumn: appZip
+
+		annotation SummarizationSetBy = Automatic
+
+	column major
+		dataType: string
+		lineageTag: 88765f85-c0e1-45a9-94e6-1d83eb2b3d19
+		summarizeBy: none
+		sourceColumn: major
+
+		annotation SummarizationSetBy = Automatic
+
+	column fte
+		dataType: double
+		lineageTag: 0a95142e-e8dc-44f5-81ac-cb8bbb9d0a82
+		summarizeBy: sum
+		sourceColumn: fte
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ftpt
+		dataType: string
+		lineageTag: df2b6f42-59d7-4cbb-86e1-cec093da9e5f
+		summarizeBy: none
+		sourceColumn: ftpt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location = [appZip]&" "&[Citizenship]
+		lineageTag: 609a1720-52ea-45a1-9415-40da4de75a7a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attendance = IF('Day_10'[ftpt]="FT", "Full-Time","Part-Time")
+		lineageTag: c318749c-3d40-402f-85a5-858cd244c9bd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sorting = RELATED('A Level'[Index])
+		formatString: 0
+		lineageTag: 13888a7c-d79e-406b-986e-5e8a8c31ab23
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'School Year' = (RIGHT([AY minus 1],4)) & "-" & (RIGHT([Academic Year],4))
+		lineageTag: 3ea4185b-d219-4eae-a8ea-0a1e73812510
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AY minus 1' = [Academic Year]-1
+		lineageTag: 9eedbeb0-5bb7-4ec1-856e-8ead10cf9092
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Term Sort' = RELATED('Term Sort'[Sort])
+		formatString: 0
+		lineageTag: 18e6f620-2f95-4b09-94ad-e2518325d16e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Academic Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b30ffe2-8549-415a-9f34-81de86662859
+		summarizeBy: sum
+		sourceColumn: Academic Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: aa50b717-e911-4082-b017-3b8206d367b8
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: 8677df96-0c14-425a-99cf-4946721b31e8
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Marital Status'
+		dataType: string
+		lineageTag: 2a853c96-271e-4b9b-8804-20acbbb83793
+		summarizeBy: none
+		sourceColumn: Marital Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: ac64db48-4672-4a83-a6cf-67330f1df46b
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Race/Ethnicity
+		dataType: string
+		lineageTag: 6375054a-9189-4f97-8000-45f2ad703ce2
+		summarizeBy: none
+		sourceColumn: Race/Ethnicity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Citizenship
+		dataType: string
+		lineageTag: 3a141855-57f1-4f7f-8c96-821898d777c3
+		summarizeBy: none
+		sourceColumn: Citizenship
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Academic Level'
+		dataType: string
+		lineageTag: 022648f2-d70f-4103-9375-6f2a000cec57
+		summarizeBy: none
+		sourceColumn: Academic Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column School
+		dataType: string
+		lineageTag: 1cbcb029-4bf4-4145-86ae-00d736647976
+		summarizeBy: none
+		sourceColumn: School
+
+		annotation SummarizationSetBy = Automatic
+
+	column Degree
+		dataType: string
+		lineageTag: 308aad20-1fa0-4e64-a5f0-0eaec99bb366
+		summarizeBy: none
+		sourceColumn: Degree
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Day_10-88fe90cc-54e7-4ceb-9615-bcb95996b45e = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Temp\LLU_Enrollment_FakeData.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Student ID", Int64.Type}, {"Academic Year", Int64.Type}, {"academicQuarter", Int64.Type}, {"Quarter", type text}, {"Age Group", type text}, {"Marital Status", type text}, {"Gender", type text}, {"hispanic", type text}, {"Race/Ethnicity", type text}, {"Citizenship", type text}, {"appState", type text}, {"appNation", type text}, {"appZip", type text}, {"Academic Level", type text}, {"School", type text}, {"Degree", type text}, {"major", type text}, {"fte", type number}, {"ftpt", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

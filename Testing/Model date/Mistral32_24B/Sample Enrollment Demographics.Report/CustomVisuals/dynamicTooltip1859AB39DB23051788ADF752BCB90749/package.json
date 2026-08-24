@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "author": {
+    "name": "MAQ Software",
+    "email": "sales@maqsoftware.com"
+  },
+  "resources": [
+    {
+      "resourceId": "rId0",
+      "sourceType": 5,
+      "file": "resources/dynamicTooltip1859AB39DB23051788ADF752BCB90749.pbiviz.json"
+    }
+  ],
+  "visual": {
+    "guid": "dynamicTooltip1859AB39DB23051788ADF752BCB90749",
+    "name": "Dynamic Tooltip",
+    "displayName": "Dynamic Tooltip",
+    "version": "1.0.0",
+    "description": "Attach dynamic tooltips to add insight to a visual",
+    "supportUrl": "https://github.com/maqsoftware/PowerBI-visuals/issues",
+    "gitHubUrl": "https://github.com/maqsoftware/PowerBI-visuals",
+    "visualClassName": "Visual"
+  },
+  "metadata": {
+    "pbivizjson": {
+      "resourceId": "rId0"
+    }
+  }
+}

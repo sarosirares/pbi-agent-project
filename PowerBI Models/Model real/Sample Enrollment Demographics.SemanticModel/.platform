@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Sample Enrollment Demographics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "db6cfb33-2582-44e1-a600-fea9e71748a6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "7436726aa3ed94e401ca",
+  "position": {
+    "x": 85.986387914540813,
+    "y": 28.299321388711736,
+    "z": 19000,
+    "height": 35.265306122448976,
+    "width": 129.9591836734694
+  },
+  "visual": {
+    "visualType": "image",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "LLU_Many_Strengths_no_bkgrd8317543691873435.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

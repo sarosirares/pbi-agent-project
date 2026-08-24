@@ -1,0 +1,179 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "VisualContainer8",
+  "position": {
+    "x": 1120.0,
+    "y": 440.0,
+    "z": 7,
+    "height": 120.0,
+    "width": 130.0
+  },
+  "visual": {
+    "name": "h8i9j0k1l2m3n4o5p6q7",
+    "displayName": "Gender Slicer",
+    "description": "Slicer for Gender filtering",
+    "ordinal": 7,
+    "state": {
+      "CustomVisualComponent": {
+        "properties": {
+          "General": {
+            "properties": {
+              "Title": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Gender'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VisualType": {
+        "expr": {
+          "Literal": {
+            "Value": "'slicer'"
+          }
+        }
+      },
+      "SlicerSettings": {
+        "properties": {
+          "AccessibilityOptions": {
+            "properties": {
+              "HasLiveRegionAnnouncement": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Date": {
+            "properties": {
+              "Hierarchy": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'None'"
+                  }
+                }
+              }
+            }
+          },
+          "FilterCard": {
+            "properties": {
+              "Style": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'List'"
+                  }
+                }
+              }
+            }
+          },
+          "Search": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Selection": {
+            "properties": {
+              "HasSelectAll": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          },
+          "TextFilter": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Columns": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Grouping\":\"Gender\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Gender\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Gender\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Day_10\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Gender\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Gender\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Gender\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

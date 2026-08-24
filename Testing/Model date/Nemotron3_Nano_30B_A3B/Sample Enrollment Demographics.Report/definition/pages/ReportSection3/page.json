@@ -1,0 +1,363 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ExecutiveEnrollmentOverview",
+  "displayName": "Executive Enrollment Overview",
+  "visualContainers": [
+    {
+      "name": "Title",
+      "visualType": "textbox",
+      "objects": {
+        "general": [
+          {
+            "properties": {
+              "paragraphs": [
+                {
+                  "textRuns": [
+                    {
+                      "value": "Executive Enrollment Overview"
+                    }
+                  ],
+                  "horizontalTextAlignment": "center"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "TotalStudentsCard",
+      "visualType": "card",
+      "objects": {
+        "general": [
+          {
+            "properties": {
+              "value": "[Students]",
+              "title": "Total Students"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "EnrollmentBySchool",
+      "visualType": "clusteredColumnChart",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "School"
+                      },
+                      "Property": "School"
+                    },
+                    "queryRef": "Day_10.School",
+                    "active": true
+                  }
+                }
+              ]
+            },
+            "Y": {
+              "projections": [
+                {
+                  "field": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Students"
+                      },
+                      "queryRef": "Day_10.Students"
+                    }
+                  }
+                }
+              ]
+            },
+            "Tooltips": {
+              "projections": [
+                {
+                  "field": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Percent of_Students"
+                      },
+                      "queryRef": "Day_10.Percent of_Students"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "sortDefinition": {
+            "sort": [
+              {
+                "field": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": { "Entity": "Day_10" },
+                      "Property": "School"
+                    },
+                    "Property": "School"
+                  },
+                  "direction": "Descending"
+                }
+              }
+            ],
+            "isDefaultSort": true
+          }
+        },
+        "objects": {
+          "title": [
+            {
+              "properties": {
+                "text": "'Enrollment by School'"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "EnrollmentByAcademicLevel",
+      "visualType": "clusteredColumnChart",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Academic Level"
+                      },
+                      "Property": "Academic Level"
+                    },
+                    "queryRef": "Day_10.Academic Level",
+                    "active": true
+                  }
+                }
+              ]
+            },
+            "Y": {
+              "projections": [
+                {
+                  "field": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Students"
+                      },
+                      "queryRef": "Day_10.Students"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "objects": {
+          "title": [
+            {
+              "properties": {
+                "text": "'Enrollment by Academic Level'"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "EnrollmentByAttendance",
+      "visualType": "donutChart",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Attendance"
+                      },
+                      "Property": "Attendance"
+                    },
+                    "queryRef": "Day_10.Attendance",
+                    "active": true
+                  }
+                }
+              ]
+            },
+            "Series": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Students"
+                      },
+                      "Property": "Students"
+                    },
+                    "queryRef": "Day_10.Students"
+                  }
+                }
+              ]
+            },
+            "Y": {
+              "projections": [
+                {
+                  "field": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Students"
+                      },
+                      "queryRef": "Day_10.Students"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "sortDefinition": {
+            "sort": [
+              {
+                "field": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": { "Entity": "Day_10" },
+                      "Property": "Attendance"
+                    },
+                    "Property": "Attendance"
+                  },
+                  "direction": "Descending"
+                }
+              }
+            ],
+            "isDefaultSort": true
+          }
+        },
+        "objects": {
+          "title": [
+            {
+              "properties": {
+                "text": "'Enrollment by Attendance'"
+              }
+            }
+          ],
+          "dataPoint": [
+            {
+              "properties": {}
+            }
+          ],
+          "labels": [
+            {
+              "properties": {
+                "percentageLabelPrecision": { "expr": { "Literal": "1D" } },
+                "labelPrecision": { "expr": { "Literal": "0D" } }
+              }
+            }
+          ],
+          "legend": [
+            {
+              "properties": {
+                "show": { "expr": { "Literal": "true" } },
+                "position": { "expr": { "Literal": "'Left'" } }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "SchoolYearSlicer",
+      "visualType": "slicer",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "School Year"
+                      },
+                      "Property": "School Year"
+                    },
+                    "queryRef": "Day_10.School Year",
+                    "active": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "QuarterSlicer",
+      "visualType": "slicer",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Quarter"
+                      },
+                      "Property": "Quarter"
+                    },
+                    "queryRef": "Day_10.Quarter",
+                    "active": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GenderSlicer",
+      "visualType": "slicer",
+      "objects": {
+        "query": {
+          "queryState": {
+            "Category": {
+              "projections": [
+                {
+                  "field": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": { "Entity": "Day_10" },
+                        "Property": "Gender"
+                      },
+                      "Property": "Gender"
+                    },
+                    "queryRef": "Day_10.Gender",
+                    "active": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

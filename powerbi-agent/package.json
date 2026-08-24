@@ -1,0 +1,10 @@
+{
+  "name": "powerbi-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Frontend dependencies for the Power BI AI Agent prototype.",
+  "dependencies": {
+    "dompurify": "^3.4.13",
+    "marked": "^18.0.9"
+  }
+}

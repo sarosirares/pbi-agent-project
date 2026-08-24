@@ -1,0 +1,342 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "Executive Enrollment Overview",
+  "displayName": "Executive Enrollment Overview",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'LLU logo black.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "LLU_logo_black28198620874147484.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fill'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "94D"
+              }
+            }
+          }
+        },
+        "type": "Image"
+      }
+    ]
+  },
+  "visuals": [
+    {
+      "name": "Title",
+      "displayName": "Executive Enrollment Overview",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 60
+      },
+      "visualType": "text",
+      "visual": {
+        "text": "Executive Enrollment Overview",
+        "fontSize": 24,
+        "fontFamily": "Segoe UI",
+        "fontColor": {
+          "solid": {
+            "color": "#000000"
+          }
+        },
+        "textAlign": "center",
+        "verticalAlign": "middle"
+      }
+    },
+    {
+      "name": "Total Students Card",
+      "displayName": "Total Students",
+      "position": {
+        "x": 0,
+        "y": 60,
+        "width": 200,
+        "height": 100
+      },
+      "visualType": "card",
+      "visual": {
+        "target": {
+          "expr": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Students"
+            }
+          }
+        },
+        "title": "Total Students",
+        "formatString": "#,0"
+      }
+    },
+    {
+      "name": "Enrollment by School Chart",
+      "displayName": "Enrollment by School",
+      "position": {
+        "x": 0,
+        "y": 160,
+        "width": 640,
+        "height": 300
+      },
+      "visualType": "clusteredBarChart",
+      "visual": {
+        "category": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "School"
+            }
+          }
+        },
+        "values": [
+          {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Students"
+              }
+            }
+          }
+        ],
+        "tooltips": [
+          {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Percent of_Students"
+              }
+            }
+          }
+        ],
+        "sort": {
+          "expr": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Students"
+            }
+          },
+          "direction": "descending"
+        }
+      }
+    },
+    {
+      "name": "Enrollment by Academic Level Chart",
+      "displayName": "Enrollment by Academic Level",
+      "position": {
+        "x": 640,
+        "y": 160,
+        "width": 640,
+        "height": 300
+      },
+      "visualType": "clusteredColumnChart",
+      "visual": {
+        "category": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Academic Level"
+            }
+          }
+        },
+        "values": [
+          {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Students"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Enrollment by Attendance Chart",
+      "displayName": "Enrollment by Attendance",
+      "position": {
+        "x": 0,
+        "y": 460,
+        "width": 640,
+        "height": 300
+      },
+      "visualType": "donutChart",
+      "visual": {
+        "category": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Attendance"
+            }
+          }
+        },
+        "values": [
+          {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Students"
+              }
+            }
+          }
+        ],
+        "tooltips": [
+          {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Percent of Students A"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "School Year Slicer",
+      "displayName": "Day_10[School Year]",
+      "position": {
+        "x": 640,
+        "y": 460,
+        "width": 200,
+        "height": 150
+      },
+      "visualType": "slicer",
+      "visual": {
+        "field": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "School Year"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Quarter Slicer",
+      "displayName": "Day_10[Quarter]",
+      "position": {
+        "x": 840,
+        "y": 460,
+        "width": 200,
+        "height": 150
+      },
+      "visualType": "slicer",
+      "visual": {
+        "field": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Quarter"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Gender Slicer",
+      "displayName": "Day_10[Gender]",
+      "position": {
+        "x": 1040,
+        "y": 460,
+        "width": 200,
+        "height": 150
+      },
+      "visualType": "slicer",
+      "visual": {
+        "field": {
+          "expr": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Day_10"
+                }
+              },
+              "Property": "Gender"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

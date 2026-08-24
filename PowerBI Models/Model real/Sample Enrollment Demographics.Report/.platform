@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sample Enrollment Demographics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6c34bf19-f5fb-47c0-a681-46512195d008"
+  }
+}

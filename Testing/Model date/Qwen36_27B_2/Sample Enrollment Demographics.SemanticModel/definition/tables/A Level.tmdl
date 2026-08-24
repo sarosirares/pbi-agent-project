@@ -1,0 +1,65 @@
+table 'A Level'
+	isHidden
+	lineageTag: fc6a4177-0dc6-49b9-a858-b64c0a148007
+
+	column 'Academic Level'
+		dataType: string
+		isHidden
+		lineageTag: 5d59d7f2-975d-4720-aae6-e6af2f1f4cf9
+		summarizeBy: none
+		sourceColumn: Academic Level
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d56c8d9d-d0e4-486a-b411-e5f99471210a
+		summarizeBy: none
+		sourceColumn: Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Explanation
+		dataType: string
+		isHidden
+		lineageTag: ff506caa-4d3d-49c1-b03a-57490f81750f
+		summarizeBy: none
+		sourceColumn: Explanation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Academic Level and Type'
+		dataType: string
+		isHidden
+		lineageTag: 74f1899b-fa05-4796-b72c-41b3b3cd3080
+		summarizeBy: none
+		sourceColumn: Academic Level and Type
+		sortByColumn: Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sheet1-54ebff3d-7267-48a5-b48b-ffc740742077 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bY0xCsMwDEWvIjy7Q9srCDIVTJtOxoNolMSQOCC1Q29fJYspePjL1/tPMbpnGVgmoeFDb3benS29UNGRBXIB5EmY1do/Ek7QopKPrquyiyVIXkny8oU7K5O8Ziu7qmncd0uQbWTVvBVabHC1ID48YOg93NBDmElWPB5U0nxNKqUf", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Academic Level" = _t, Index = _t, Explanation = _t, #"Academic Level and Type" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Academic Level", type text}, {"Index", Int64.Type}, {"Explanation", type text}, {"Academic Level and Type", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Power BI AI Agent</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Conversatii</h2>
+
+                <button
+                    id="new-chat-button"
+                    type="button"
+                >
+                    Conversatie noua
+                </button>
+            </div>
+
+            <div
+                id="session-list"
+                class="session-list"
+            ></div>
+        </aside>
+
+        <main>
+            <header>
+                <div>
+                    <h1>Power BI AI Agent</h1>
+                </div>
+            </header>
+
+            <section
+                id="chat-messages"
+                aria-live="polite"
+            >
+                <div id="empty-state">
+                    <h2>Incepe o conversatie</h2>
+                    <p>
+                        Descrie raportul Power BI de care ai nevoie
+                        sau pune o intrebare.
+                    </p>
+                </div>
+            </section>
+
+            <div
+                id="status-message"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+            <form id="chat-form">
+                <label for="message-input">
+                    Mesaj
+                </label>
+
+                <textarea
+                    id="message-input"
+                    name="message"
+                    rows="3"
+                    maxlength="4000"
+                    placeholder="Scrie mesajul aici..."
+                    required
+                ></textarea>
+
+                <button
+                    id="send-button"
+                    type="submit"
+                >
+                    Trimite
+                </button>
+            </form>
+        </main>
+    </div>
+
+    <script src="/static/vendor/marked.umd.js"></script>
+    <script src="/static/vendor/purify.min.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

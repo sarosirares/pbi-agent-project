@@ -1,0 +1,31 @@
+table Facultati
+	lineageTag: 6d82c0a9-4f03-4118-9e81-4afdd7fb8fd0
+
+	column FacultateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a97c36b-c953-4599-9f59-97c45f3f34af
+		summarizeBy: none
+		sourceColumn: FacultateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Denumire
+		dataType: string
+		lineageTag: 618ecc98-f025-4519-9eb0-5155305c716e
+		summarizeBy: none
+		sourceColumn: Denumire
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Facultati = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUXIsLcnPTSzJTE5UKM5UcE7MSS7NSSzJTyxKVYrViVYyAipxzs8rLikqTS7JzFSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [FacultateId = _t, Denumire = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"FacultateId", Int64.Type}, {"Denumire", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

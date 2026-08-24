@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "1f28e37b9e9f1686e09f",
+  "position": {
+    "x": 915.416164053076,
+    "y": 373.46200241254525,
+    "z": 17000,
+    "height": 33.003618817852839,
+    "width": 349.1435464414958
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Use filters below to modify view.",
+                    "textStyle": {
+                      "fontFamily": "Candara",
+                      "fontStyle": "italic",
+                      "color": "#000000"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "build": "13.0.1100.210",
+  "version": "1.2.13",
+  "author": {
+    "name": "Microsoft",
+    "email": "pbicvsupport@microsoft.com"
+  },
+  "licenseTerms": "http://go.microsoft.com/fwlink/?LinkID=627540",
+  "privacyTerms": "http://go.microsoft.com/fwlink/?LinkID=627541",
+  "resources": [
+    {
+      "resourceId": "rId1",
+      "sourceType": 0,
+      "file": "resources/ChicletSlicer.js"
+    },
+    {
+      "resourceId": "rId2",
+      "sourceType": 1,
+      "file": "resources/ChicletSlicer.css"
+    },
+    {
+      "resourceId": "rId3",
+      "sourceType": 3,
+      "file": "resources/icon.svg"
+    }
+  ],
+  "visual": {
+    "guid": "ChicletSlicer1448559807354",
+    "name": "ChicletSlicer",
+    "displayName": "Chiclet Slicer",
+    "version": "1.2.13",
+    "description": "Use this slicer to display image and/or text buttons that act as an in-canvas filter. Define additional properties for the layout & selection to customize this slicer to meet your specific needs",
+    "supportUrl": "http://community.powerbi.com",
+    "gitHubUrl": "https://github.com/Microsoft/PowerBI-visuals"
+  },
+  "images": {
+    "icon": {
+      "resourceId": "rId3"
+    }
+  },
+  "code": {
+    "javaScript": {
+      "resourceId": "rId1"
+    },
+    "css": {
+      "resourceId": "rId2"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+table Inscrieri
+	lineageTag: e94536e3-8c3c-4721-8895-21938cc76e6f
+
+	measure 'Studenti Promovati' = COALESCE( CALCULATE(DISTINCTCOUNT(Inscrieri[StudentId]), Inscrieri[Status] = "Promovat" ), 0 )
+		lineageTag: 6d2e24eb-1184-4b3f-9b3d-8acc6b625585
+
+	measure 'Studenti Evaluati' = COALESCE( CALCULATE(DISTINCTCOUNT(Inscrieri[StudentId]), Inscrieri[Status] IN {"Promovat", "Nepromovat"} ), 0 )
+		lineageTag: 237523f4-5bba-426f-9f23-9395a4939f11
+
+	measure 'Rata Promovare' = DIVIDE([Studenti Promovati], [Studenti Evaluati], 0)
+		formatString: 0.00%
+		lineageTag: 12862e71-ae42-4a78-9c4f-844800bed50a
+
+	column StudentId
+		dataType: int64
+		formatString: 0
+		lineageTag: 6918bd59-ee6b-42f1-8a93-b5acc1bb24a9
+		summarizeBy: none
+		sourceColumn: StudentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnUniversitar
+		dataType: string
+		lineageTag: 2cf7f480-0981-4149-a9e6-620f0858714a
+		summarizeBy: none
+		sourceColumn: AnUniversitar
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: b30caadd-3d6b-4d76-83bc-532669f952f9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Inscrieri = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjQwVNJRMjIwMtEFEqZAdkBRfm5+WWKJUqwOSNoITdovtQBVgTF+/SZo0o5JiXkp+XlQWajlpiBZM5yW45I2RpNGdlssAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [StudentId = _t, AnUniversitar = _t, Status = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"StudentId", Int64.Type}, {"AnUniversitar", type text}, {"Status", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

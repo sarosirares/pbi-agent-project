@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "VisualContainer6",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 8000,
+    "height": 77.496601961096943,
+    "width": 117.11565290178571
+  },
+  "visual": {
+    "visualType": "image",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "LLU_logo_only.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

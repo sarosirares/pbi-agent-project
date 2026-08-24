@@ -1,0 +1,68 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.1.0/schema.json",
+  "name": "VisualContainer3",
+  "displayName": "Enrollment by Academic Level",
+  "visualName": "clusteredColumnChart",
+  "visualType": "clusteredColumnChart",
+  "visualContainerId": "1f28e37b9e9f1686e09f",
+  "visualId": "1f28e37b9e9f1686e09f",
+  "order": 3,
+  "position": {
+    "x": 2,
+    "y": 1,
+    "z": 3,
+    "rowSpan": 2,
+    "colSpan": 2
+  },
+  "visualProperties": {
+    "general": [
+      {
+        "properties": {
+          "titleText": {
+            "expr": {
+              "Literal": {
+                "Value": "Enrollment by Academic Level"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "clusteredColumnChart": [
+      {
+        "properties": {
+          "categoryAxis": {
+            "expr": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "Academic Level"
+              }
+            }
+          },
+          "valueAxis": {
+            "expr": {
+              "Measure": {
+                "Entity": "Day_10",
+                "Name": "Students"
+              }
+            }
+          },
+          "values": [
+            {
+              "expr": {
+                "Measure": {
+                  "Entity": "Day_10",
+                  "Name": "Students"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+table 'School Sort'
+	isHidden
+	lineageTag: 7c850e44-1c63-4dd2-ab91-da9dfe457b2a
+
+	column School
+		dataType: string
+		isHidden
+		lineageTag: c8a65c3d-979d-495b-8ee1-aed235648d2f
+		summarizeBy: none
+		sourceColumn: School
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort School'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f6a55519-36d3-400a-8e29-efd0e4f19c91
+		summarizeBy: none
+		sourceColumn: Sort School
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'School Sort-08a43145-9d0f-4c42-bdb7-16832105d69d' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCnb0CFDSUTJUitUBcpw8gGwjCNsFyDSGMH2BTBMI0w/INIUwQfrMoEyQPnMIOwjItFCKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [School = _t, #"Sort School" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"School", type text}, {"Sort School", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

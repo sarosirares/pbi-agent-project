@@ -1,0 +1,32 @@
+table Studenti
+	lineageTag: 51366b6d-f5ee-4d6e-b3a3-e78c44f4f6b5
+
+	column StudentId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b8aa4d0-a323-48d9-b4ff-e4a1491ed37a
+		summarizeBy: none
+		sourceColumn: StudentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FacultateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 76670524-5c87-4fae-8bab-44876e9cd892
+		summarizeBy: none
+		sourceColumn: FacultateId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Studenti = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjQwVNJRMlSK1QGxjZDYxkC2EZRtAmHHAgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [StudentId = _t, FacultateId = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"StudentId", Int64.Type}, {"FacultateId", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

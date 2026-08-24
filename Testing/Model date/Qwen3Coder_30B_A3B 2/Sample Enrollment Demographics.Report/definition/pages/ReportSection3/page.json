@@ -1,0 +1,384 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSection3",
+  "displayName": "Executive Enrollment Overview",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'LLU logo black.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "LLU_logo_black28198620874147484.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fill'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "94D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visuals": [
+    {
+      "name": "VisualContainer1",
+      "displayName": "Total Students",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 100
+      },
+      "visualType": "card",
+      "visual": {
+        "displayName": "Card",
+        "query": {
+          "queryState": {
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Total Students",
+                "format": "0",
+                "sort": {
+                  "direction": "ascending"
+                }
+              }
+            ]
+          }
+        },
+        "settings": {
+          "general": {
+            "displayUnits": "None"
+          },
+          "data": {
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Total Students",
+                "format": "0",
+                "sort": {
+                  "direction": "ascending"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer2",
+      "displayName": "Enrollment by School",
+      "position": {
+        "x": 220,
+        "y": 0,
+        "width": 400,
+        "height": 300
+      },
+      "visualType": "clusteredbar",
+      "visual": {
+        "displayName": "Clustered Bar Chart",
+        "query": {
+          "queryState": {
+            "categories": [
+              {
+                "queryRef": "School",
+                "displayName": "School",
+                "sort": {
+                  "direction": "descending",
+                  "sortBy": "Students"
+                }
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ],
+            "tooltips": [
+              {
+                "queryRef": "Percent of_Students",
+                "displayName": "Percent of Students"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "general": {
+            "displayUnits": "None"
+          },
+          "data": {
+            "categories": [
+              {
+                "queryRef": "School",
+                "displayName": "School",
+                "sort": {
+                  "direction": "descending",
+                  "sortBy": "Students"
+                }
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ],
+            "tooltips": [
+              {
+                "queryRef": "Percent of_Students",
+                "displayName": "Percent of Students"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer3",
+      "displayName": "Enrollment by Academic Level",
+      "position": {
+        "x": 640,
+        "y": 0,
+        "width": 400,
+        "height": 300
+      },
+      "visualType": "clusteredcolumn",
+      "visual": {
+        "displayName": "Clustered Column Chart",
+        "query": {
+          "queryState": {
+            "categories": [
+              {
+                "queryRef": "Academic Level",
+                "displayName": "Academic Level"
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "general": {
+            "displayUnits": "None"
+          },
+          "data": {
+            "categories": [
+              {
+                "queryRef": "Academic Level",
+                "displayName": "Academic Level"
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer4",
+      "displayName": "Enrollment by Attendance",
+      "position": {
+        "x": 0,
+        "y": 320,
+        "width": 400,
+        "height": 300
+      },
+      "visualType": "donut",
+      "visual": {
+        "displayName": "Donut Chart",
+        "query": {
+          "queryState": {
+            "categories": [
+              {
+                "queryRef": "Attendance",
+                "displayName": "Attendance"
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ],
+            "tooltips": [
+              {
+                "queryRef": "Percent of Students A",
+                "displayName": "Percent of Students A"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "general": {
+            "displayUnits": "None"
+          },
+          "data": {
+            "categories": [
+              {
+                "queryRef": "Attendance",
+                "displayName": "Attendance"
+              }
+            ],
+            "values": [
+              {
+                "queryRef": "Students",
+                "displayName": "Students"
+              }
+            ],
+            "tooltips": [
+              {
+                "queryRef": "Percent of Students A",
+                "displayName": "Percent of Students A"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer5",
+      "displayName": "School Year",
+      "position": {
+        "x": 420,
+        "y": 320,
+        "width": 200,
+        "height": 100
+      },
+      "visualType": "slicer",
+      "visual": {
+        "displayName": "Slicer",
+        "query": {
+          "queryState": {
+            "values": [
+              {
+                "queryRef": "School Year",
+                "displayName": "School Year"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "data": {
+            "values": [
+              {
+                "queryRef": "School Year",
+                "displayName": "School Year"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer6",
+      "displayName": "Quarter",
+      "position": {
+        "x": 640,
+        "y": 320,
+        "width": 200,
+        "height": 100
+      },
+      "visualType": "slicer",
+      "visual": {
+        "displayName": "Slicer",
+        "query": {
+          "queryState": {
+            "values": [
+              {
+                "queryRef": "Quarter",
+                "displayName": "Quarter"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "data": {
+            "values": [
+              {
+                "queryRef": "Quarter",
+                "displayName": "Quarter"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "VisualContainer7",
+      "displayName": "Gender",
+      "position": {
+        "x": 860,
+        "y": 320,
+        "width": 200,
+        "height": 100
+      },
+      "visualType": "slicer",
+      "visual": {
+        "displayName": "Slicer",
+        "query": {
+          "queryState": {
+            "values": [
+              {
+                "queryRef": "Gender",
+                "displayName": "Gender"
+              }
+            ]
+          }
+        },
+        "settings": {
+          "data": {
+            "values": [
+              {
+                "queryRef": "Gender",
+                "displayName": "Gender"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+table 'Age Group Sort'
+	isHidden
+	lineageTag: fb40e167-25d1-4e86-b4b6-eb217b9ce1d2
+
+	column 'Age Group'
+		dataType: string
+		isHidden
+		lineageTag: 174f3abb-77b3-4f10-a35f-9df25cadcef9
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fa2c9f83-20b1-4eb2-9739-535cd13f9d71
+		summarizeBy: none
+		sourceColumn: Age Sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Age Group Sort-2f038f98-8ef5-4e35-ba41-251a1a5b6511' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("JcnLDcAgDATRXnwNK+HPJkotFv23ATa3eZpMUUJ/GaKyRopNWBzZFWH1vOUTXi+uiCixFQRLb4t8Tn+y1gY=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [#"Age Group" = _t, #"Age Sort" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Age Group", type text}, {"Age Sort", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

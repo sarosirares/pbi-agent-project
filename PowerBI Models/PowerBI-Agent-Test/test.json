@@ -1,0 +1,20 @@
+{
+  "type": "Matrix",
+  "rows": [
+    {
+      "field": "Facultati.Denumire"
+    }
+  ],
+  "columns": [
+    {
+      "field": "Inscrieri.AnUniversitar"
+    }
+  ],
+  "values": [
+    {
+      "measure": "RataPromovare"
+    }
+  ],
+  "slicers": [],
+  "reason": "Vizualizare comparativă a ratei de promovare pe facultati si ani universitari, folosind exclusiv marea RataPromovare."
+}

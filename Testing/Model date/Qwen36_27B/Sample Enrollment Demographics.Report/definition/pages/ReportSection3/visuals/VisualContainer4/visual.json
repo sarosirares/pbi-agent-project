@@ -1,0 +1,177 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "VisualContainer4",
+  "position": {
+    "x": 280.0,
+    "y": 440.0,
+    "z": 3,
+    "height": 250.0,
+    "width": 500.0
+  },
+  "visual": {
+    "name": "d4e5f6g7h8i9j0k1l2m3",
+    "displayName": "Enrollment by Academic Level",
+    "description": "Clustered column chart showing enrollment by academic level",
+    "ordinal": 3,
+    "state": {
+      "CustomVisualComponent": {
+        "properties": {
+          "General": {
+            "properties": {
+              "Title": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Enrollment by Academic Level'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VisualType": {
+        "expr": {
+          "Literal": {
+            "Value": "'clusteredColumnChart'"
+          }
+        }
+      },
+      "Categories": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Category\":\"Academic Level\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Academic Level\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Academic Level\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Day_10\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Academic Level\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Academic Level\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Academic Level\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "YAxes": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Y\":\"Students\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Students\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

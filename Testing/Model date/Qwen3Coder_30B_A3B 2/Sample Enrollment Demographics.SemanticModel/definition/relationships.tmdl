@@ -1,0 +1,16 @@
+relationship AutoDetected_aa662a77-ee11-46f2-b8f8-f42fdc6f60b2
+	fromColumn: Day_10.'Academic Level'
+	toColumn: 'A Level'.'Academic Level'
+
+relationship AutoDetected_8684e1fa-a997-4b74-8cbc-5c673c49cfb8
+	fromColumn: Day_10.School
+	toColumn: 'School Sort'.School
+
+relationship AutoDetected_aebbdfc4-94da-4284-a4da-a36f001e7dc6
+	fromColumn: Day_10.'Age Group'
+	toColumn: 'Age Group Sort'.'Age Group'
+
+relationship AutoDetected_7d7ab096-cb8b-4d1a-bd4f-1363c4b05225
+	fromColumn: Day_10.Quarter
+	toColumn: 'Term Sort'.Quarter
+

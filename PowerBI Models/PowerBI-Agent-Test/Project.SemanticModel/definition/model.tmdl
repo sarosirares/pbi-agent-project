@@ -1,0 +1,21 @@
+model Model
+	culture: ro-RO
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Facultati","Studenti","Inscrieri"]
+
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
+
+ref table Facultati
+ref table Studenti
+ref table Inscrieri
+
+ref cultureInfo ro-RO
+

@@ -1,0 +1,8 @@
+relationship AutoDetected_8b976470-d116-416d-9b95-247cd1394246
+	fromColumn: Studenti.FacultateId
+	toColumn: Facultati.FacultateId
+
+relationship AutoDetected_6f09d76a-31d5-4b6b-83ce-b1c0acfbe3fb
+	fromColumn: Inscrieri.StudentId
+	toColumn: Studenti.StudentId
+

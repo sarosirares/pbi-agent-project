@@ -1,0 +1,179 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "VisualContainer6",
+  "position": {
+    "x": 800.0,
+    "y": 440.0,
+    "z": 5,
+    "height": 120.0,
+    "width": 140.0
+  },
+  "visual": {
+    "name": "f6g7h8i9j0k1l2m3n4o5",
+    "displayName": "School Year Slicer",
+    "description": "Slicer for School Year filtering",
+    "ordinal": 5,
+    "state": {
+      "CustomVisualComponent": {
+        "properties": {
+          "General": {
+            "properties": {
+              "Title": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'School Year'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VisualType": {
+        "expr": {
+          "Literal": {
+            "Value": "'slicer'"
+          }
+        }
+      },
+      "SlicerSettings": {
+        "properties": {
+          "AccessibilityOptions": {
+            "properties": {
+              "HasLiveRegionAnnouncement": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Date": {
+            "properties": {
+              "Hierarchy": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'None'"
+                  }
+                }
+              }
+            }
+          },
+          "FilterCard": {
+            "properties": {
+              "Style": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'List'"
+                  }
+                }
+              }
+            }
+          },
+          "Search": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Selection": {
+            "properties": {
+              "HasSelectAll": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          },
+          "TextFilter": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Columns": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Grouping\":\"School Year\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"School Year\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"School Year\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Day_10\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"School Year\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"School Year\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"School Year\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

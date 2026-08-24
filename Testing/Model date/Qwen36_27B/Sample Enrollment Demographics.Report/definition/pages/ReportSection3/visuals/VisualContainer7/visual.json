@@ -1,0 +1,179 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "VisualContainer7",
+  "position": {
+    "x": 960.0,
+    "y": 440.0,
+    "z": 6,
+    "height": 120.0,
+    "width": 140.0
+  },
+  "visual": {
+    "name": "g7h8i9j0k1l2m3n4o5p6",
+    "displayName": "Quarter Slicer",
+    "description": "Slicer for Quarter filtering",
+    "ordinal": 6,
+    "state": {
+      "CustomVisualComponent": {
+        "properties": {
+          "General": {
+            "properties": {
+              "Title": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Quarter'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VisualType": {
+        "expr": {
+          "Literal": {
+            "Value": "'slicer'"
+          }
+        }
+      },
+      "SlicerSettings": {
+        "properties": {
+          "AccessibilityOptions": {
+            "properties": {
+              "HasLiveRegionAnnouncement": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Date": {
+            "properties": {
+              "Hierarchy": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'None'"
+                  }
+                }
+              }
+            }
+          },
+          "FilterCard": {
+            "properties": {
+              "Style": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'List'"
+                  }
+                }
+              }
+            }
+          },
+          "Search": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          },
+          "Selection": {
+            "properties": {
+              "HasSelectAll": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          },
+          "TextFilter": {
+            "properties": {
+              "Enabled": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Columns": {
+        "properties": {
+          "Roles": {
+            "expr": {
+              "Literal": {
+                "Value": "{\"Grouping\":\"Quarter\"}"
+              }
+            }
+          },
+          "Select": {
+            "expr": {
+              "Tuple": [
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Quarter\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "ScalarExpr": {
+                      "Literal": {
+                        "Value": "true"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Quarter\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Day_10\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Quarter\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Quarter\""
+                    }
+                  }
+                },
+                {
+                  "expr": {
+                    "Literal": {
+                      "Value": "\"Quarter\""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "VisualContainer11",
+  "position": {
+    "x": 1214.867565055762,
+    "y": 91.003717472118964,
+    "z": 10000,
+    "height": 30.334572490706318,
+    "width": 65.130111524163567
+  },
+  "visual": {
+    "visualType": "dynamicTooltip1859AB39DB23051788ADF752BCB90749",
+    "query": {
+      "queryState": {
+        "measure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Day_10"
+                    }
+                  },
+                  "Property": "Tip"
+                }
+              },
+              "queryRef": "Day_10.Tip"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "measuretooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

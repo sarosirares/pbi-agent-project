@@ -1,0 +1,159 @@
+/*
+ *  Power BI Visualizations
+ *
+ *  Copyright (c) Microsoft Corporation
+ *  All rights reserved.
+ *  MIT License
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the ""Software""), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+.chicletSlicer {
+  font-family: 'Segoe UI', 'wf_segoe-ui_normal', helvetica, arial, sans-serif;
+}
+.chicletSlicer .clear {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAMAAADHVLbdAAAAZlBMVEUAAADq6urp6enBwcHV1dWfn5+zs7O/v7/l5eWZmZmioqKjo6OlpaWmpqanp6eurq6vr6+xsbGzs7O2tra3t7e4uLi6urq9vb3Dw8PGxsbJycnMzMzNzc3Ozs7Pz8/Q0NDR0dH///9091kCAAAACXRSTlMARGaZmd3d3e7y4Z+JAAAAX0lEQVQIW3XI1xJAMBSE4dWiHUSJRPf+TymFCRf2Ymf+D/iZWr85sv2dAuAeZmGen5/UELtsbp+sby1lzgfzBwOq0CSzmpirQywuEUl9AanOJSBTfYo/qaEkygvqvfhdpMwD2G4l8pMAAAAASUVORK5CYII=);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 13px;
+  height: 12px;
+  margin: 4px 2px;
+  float: right;
+  cursor: pointer;
+}
+.chicletSlicer .row {
+  white-space: nowrap;
+}
+.chicletSlicer .hidden {
+  display: none !important;
+}
+.chicletSlicer .slicerBody .cell {
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  float: left;
+}
+.chicletSlicer .slicerBody ul {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer {
+  height: 100%;
+  width: 100%;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer .slicer-text-wrapper {
+  box-sizing: border-box;
+  text-align: center;
+  order: 0;
+  align-self: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: stretch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer .slicer-img-wrapper {
+  max-width: 100%;
+  height: auto;
+  align-self: center;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer .stretchImage {
+  align-self: auto;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer .bottomImage {
+  order: 1;
+}
+.chicletSlicer .slicerBody li.slicerItemContainer .slicerItem-disabled {
+  opacity: 0.4;
+  color: #fff !important;
+}
+.chicletSlicer .slicerBody.slicerBody-vertical .cell {
+  clear: both;
+}
+.chicletSlicer .slicerBody.slicerBody-vertical .row {
+  float: left;
+}
+.chicletSlicer .slicerItemContainer.selected {
+  background: #BDD7EE;
+}
+.chicletSlicer .row-horizontal {
+  display: inline-block;
+}
+.chicletSlicer .slicerText,
+.chicletSlicer .slicerContainer .slicerText {
+  line-height: 20px;
+}
+.chicletSlicer .searchHeader {
+  overflow: hidden;
+}
+.chicletSlicer .searchHeader.collapsed {
+  display: none;
+}
+.chicletSlicer .searchHeader.show {
+  display: -webkit-box;
+  display: flex;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  width: calc(100% - 10px);
+  border: 1px solid #212121;
+  height: 20px;
+}
+.chicletSlicer .searchHeader .search {
+  cursor: pointer;
+  margin: 1px 4px;
+  color: #212121;
+  width: 17px;
+  height: 17px;
+  background-size: cover;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAMAAAAMs7fIAAAAk1BMVEUAAACnVx///+8AAAAAFycXAAAXJ1cfAAAfHx8fb78vX68/X4c/b6dHj89Xn9dXp99fF2dfL49fPydfPzdnt+9vPx9vv/eHx/+PRx+Pv+enVx+n3/+v1++3ZwC3Zx+3Z0+37//HhwDPjyfPjy/P7/fP///Xr4ffnz/nz6fvz6f3v3f/z4//76//98///9///+/////atKXiAAAAA3RSTlMA3d02gtHlAAAAbUlEQVR4AWOAATVhdmY2SQY40JXgUWFg0BDlhQnoSfFDaRGoiBYnlKEjqAphKItBRfTlpSEMRXEIjWCpi8DUyEJFtLlg5ggoQBhMcvwIOyEsRg6QezRF+RDO0VcTYmXhlkEIQFnkCzAoAQUIAADDFQhfMTPyzwAAAABJRU5ErkJggg==);
+}
+.chicletSlicer .searchHeader input {
+  color: #333333;
+  cursor: auto;
+  align-self: center;
+  flex: 1 1 0px;
+  -webkit-flex: 1 1 0px;
+  border-style: none;
+  min-width: 0px;
+  padding: 0;
+}
+.chicletSlicer .searchHeader input:focus {
+  outline-width: 0;
+}
+
+.visual-icon.ChicletSlicer1448559807354 {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4NCjxnIGlkPSJDaGljbGV0U2xpY2VyIj4NCjxwYXRoIGlkPSLQpNGW0LPRg9GA0LAtMjQiIGQ9Ik0zLjA1NywxLjk4NCBDMy4wNTcsMS45ODQgNy45NDgsMS45ODQgNy45NDgsMS45ODQgQzguNTE3LDEuOTg0IDguOTc4LDIuNDQ1IDguOTc4LDMuMDE0IEM4Ljk3OCwzLjAxNCA4Ljk3OCw3LjkwNSA4Ljk3OCw3LjkwNSBDOC45NzgsOC40NzMgOC41MTcsOC45MzQgNy45NDgsOC45MzQgQzcuOTQ4LDguOTM0IDMuMDU3LDguOTM0IDMuMDU3LDguOTM0IEMyLjQ4OSw4LjkzNCAyLjAyOCw4LjQ3MyAyLjAyOCw3LjkwNSBDMi4wMjgsNy45MDUgMi4wMjgsMy4wMTQgMi4wMjgsMy4wMTQgQzIuMDI4LDIuNDQ1IDIuNDg5LDEuOTg0IDMuMDU3LDEuOTg0IHoiIGZpbGw9IiM0RDgyQjgiIC8+DQo8cGF0aCBpZD0i0KTRltCz0YPRgNCwLTI0LdC60L7Qv9GW0Y8iIGQ9Ik0xMi4wNTcsMS45ODQgQzEyLjA1NywxLjk4NCAxNi45NDgsMS45ODQgMTYuOTQ4LDEuOTg0IEMxNy41MTcsMS45ODQgMTcuOTc4LDIuNDQ1IDE3Ljk3OCwzLjAxNCBDMTcuOTc4LDMuMDE0IDE3Ljk3OCw3LjkwNSAxNy45NzgsNy45MDUgQzE3Ljk3OCw4LjQ3MyAxNy41MTcsOC45MzQgMTYuOTQ4LDguOTM0IEMxNi45NDgsOC45MzQgMTIuMDU3LDguOTM0IDEyLjA1Nyw4LjkzNCBDMTEuNDg5LDguOTM0IDExLjAyOCw4LjQ3MyAxMS4wMjgsNy45MDUgQzExLjAyOCw3LjkwNSAxMS4wMjgsMy4wMTQgMTEuMDI4LDMuMDE0IEMxMS4wMjgsMi40NDUgMTEuNDg5LDEuOTg0IDEyLjA1NywxLjk4NCB6IiBmaWxsPSIjRDY2MjQ0IiAvPg0KPHBhdGggaWQ9ItCk0ZbQs9GD0YDQsC0yNC3QutC+0L/RltGPLSIgZD0iTTMuMDU3LDEwLjk4NCBDMy4wNTcsMTAuOTg0IDcuOTQ4LDEwLjk4NCA3Ljk0OCwxMC45ODQgQzguNTE3LDEwLjk4NCA4Ljk3OCwxMS40NDUgOC45NzgsMTIuMDE0IEM4Ljk3OCwxMi4wMTQgOC45NzgsMTYuOTA1IDguOTc4LDE2LjkwNSBDOC45NzgsMTcuNDczIDguNTE3LDE3LjkzNCA3Ljk0OCwxNy45MzQgQzcuOTQ4LDE3LjkzNCAzLjA1NywxNy45MzQgMy4wNTcsMTcuOTM0IEMyLjQ4OSwxNy45MzQgMi4wMjgsMTcuNDczIDIuMDI4LDE2LjkwNSBDMi4wMjgsMTYuOTA1IDIuMDI4LDEyLjAxNCAyLjAyOCwxMi4wMTQgQzIuMDI4LDExLjQ0NSAyLjQ4OSwxMC45ODQgMy4wNTcsMTAuOTg0IHoiIGZpbGw9IiM4QkFFRDEiIC8+DQo8cGF0aCBpZD0i0KTRltCz0YPRgNCwLTI0LdC60L7Qv9GW0Y8tIiBkPSJNMTIuMDU3LDEwLjk4NCBDMTIuMDU3LDEwLjk4NCAxNi45NDgsMTAuOTg0IDE2Ljk0OCwxMC45ODQgQzE3LjUxNywxMC45ODQgMTcuOTc4LDExLjQ0NSAxNy45NzgsMTIuMDE0IEMxNy45NzgsMTIuMDE0IDE3Ljk3OCwxNi45MDUgMTcuOTc4LDE2LjkwNSBDMTcuOTc4LDE3LjQ3MyAxNy41MTcsMTcuOTM0IDE2Ljk0OCwxNy45MzQgQzE2Ljk0OCwxNy45MzQgMTIuMDU3LDE3LjkzNCAxMi4wNTcsMTcuOTM0IEMxMS40ODksMTcuOTM0IDExLjAyOCwxNy40NzMgMTEuMDI4LDE2LjkwNSBDMTEuMDI4LDE2LjkwNSAxMS4wMjgsMTIuMDE0IDExLjAyOCwxMi4wMTQgQzExLjAyOCwxMS40NDUgMTEuNDg5LDEwLjk4NCAxMi4wNTcsMTAuOTg0IHoiIGZpbGw9IiM3MEE1OTMiIC8+DQo8L2c+DQo8L3N2Zz4NCg==);
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.1.0/schema.json",
+  "name": "VisualContainer5",
+  "displayName": "School Year Slicer",
+  "visualName": "slicer",
+  "visualType": "slicer",
+  "visualContainerId": "7436726aa3ed94e401ca",
+  "visualId": "7436726aa3ed94e401ca",
+  "order": 5,
+  "position": {
+    "x": 0,
+    "y": 3,
+    "z": 5,
+    "rowSpan": 1,
+    "colSpan": 2
+  },
+  "visualProperties": {
+    "general": [
+      {
+        "properties": {
+          "titleText": {
+            "expr": {
+              "Literal": {
+                "Value": "School Year"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "slicer": [
+      {
+        "properties": {
+          "selection": {
+            "expr": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Day_10"
+                  }
+                },
+                "Property": "School Year"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

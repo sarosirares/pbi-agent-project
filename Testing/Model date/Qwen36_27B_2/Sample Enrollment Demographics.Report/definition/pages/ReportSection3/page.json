@@ -1,0 +1,131 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSection3",
+  "displayName": "Executive Enrollment Overview",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "Pod3",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'LLU logo black.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "LLU_logo_black039003356392876665.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fill'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "94D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "100D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "VisualContainer5",
+      "target": "VisualContainer",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer5",
+      "target": "VisualContainer1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer5",
+      "target": "VisualContainer2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer5",
+      "target": "VisualContainer3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer6",
+      "target": "VisualContainer",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer6",
+      "target": "VisualContainer1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer6",
+      "target": "VisualContainer2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer6",
+      "target": "VisualContainer3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer7",
+      "target": "VisualContainer",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer7",
+      "target": "VisualContainer1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer7",
+      "target": "VisualContainer2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "VisualContainer7",
+      "target": "VisualContainer3",
+      "type": "DataFilter"
+    }
+  ]
+}
