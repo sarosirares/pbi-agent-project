@@ -271,20 +271,6 @@ Scripturile trebuie adaptate la mediul in care sunt rulate. Pentru caile de lucr
 POWERBI_AGENT_ROOT
 ```
 
-Exemplu:
-
-```bash
-export POWERBI_AGENT_ROOT=/path/to/powerbi-agent-runtime
-```
-
-Un job poate fi trimis apoi, de exemplu, cu:
-
-```bash
-sbatch Testing/Tests/cluster/run_vllm_qwen36_27b.sh
-```
-
-Configuratiile SLURM sunt cele folosite in testele proiectului si pot necesita modificari pe alt cluster.
-
 ### `Testing/Tests/tests/`
 
 Contine benchmark-uri si rezultate pentru modelele evaluate.
@@ -297,15 +283,6 @@ Au fost testate, intre altele:
 - Qwen3-Coder-30B-A3B-Instruct;
 - Qwen3.5-9B;
 - Qwen3.6-27B.
-
-Pentru Qwen3.6-27B, rezultatele principale pastrate in repository includ:
-
-```text
-Benchmark semantic / DAX V2: 72 / 80
-Report authoring:            44 / 50
-Production validation:       50 / 50
-Safety:                      10 / 10
-```
 
 Detaliile pentru fiecare rulare sunt in fisierele din `Testing/Tests/tests/`.
 
