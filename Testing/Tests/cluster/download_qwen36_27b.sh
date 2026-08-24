@@ -7,12 +7,12 @@
 #SBATCH --mem=8G
 #SBATCH --time=01:30:00
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/download-qwen36-27b-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/download-qwen36-27b-%j.err
+#SBATCH --output=download-qwen36-27b-%j.out
+#SBATCH --error=download-qwen36-27b-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_PATH="$PROJECT_DIR/images/vllm-nightly.sif"
 
 MODEL_REPO="Qwen/Qwen3.6-27B"

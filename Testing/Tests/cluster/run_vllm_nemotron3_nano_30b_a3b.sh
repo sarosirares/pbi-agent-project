@@ -8,12 +8,12 @@
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:nvidia_h200_3g.71gb:1
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/nemotron3-vllm-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/nemotron3-vllm-%j.err
+#SBATCH --output=nemotron3-vllm-%j.out
+#SBATCH --error=nemotron3-vllm-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_PATH="$PROJECT_DIR/images/vllm-v0.26.0.sif"
 MODEL_PATH="$PROJECT_DIR/models/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 REASONING_PARSER="$MODEL_PATH/nano_v3_reasoning_parser.py"

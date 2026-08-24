@@ -8,12 +8,12 @@
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:nvidia_h200_2g.35gb:1
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/granite41-vllm-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/granite41-vllm-%j.err
+#SBATCH --output=granite41-vllm-%j.out
+#SBATCH --error=granite41-vllm-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 
 IMAGE_PATH="$PROJECT_DIR/images/vllm-nightly.sif"
 MODEL_PATH="$PROJECT_DIR/models/Granite4.1-8B"

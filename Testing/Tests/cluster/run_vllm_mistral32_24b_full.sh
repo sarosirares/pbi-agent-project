@@ -6,12 +6,12 @@
 #SBATCH --mem=16G
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:nvidia_h200:1
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/mistral32-vllm-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/mistral32-vllm-%j.err
+#SBATCH --output=mistral32-vllm-%j.out
+#SBATCH --error=mistral32-vllm-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_PATH="$PROJECT_DIR/images/vllm-nightly.sif"
 MODEL_PATH="$PROJECT_DIR/models/Mistral-Small-3.2-24B-Instruct-2506"
 

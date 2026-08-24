@@ -9,10 +9,11 @@
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_DIR="$PROJECT_DIR/images"
 
-DEF_FILE="$HOME/powerbi-agent/cluster/vllm-nightly.def"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DEF_FILE="$SCRIPT_DIR/vllm-nightly.def"
 
 SCRATCH_BUILD_DIR="/scratch/$USER/powerbi-agent-build"
 

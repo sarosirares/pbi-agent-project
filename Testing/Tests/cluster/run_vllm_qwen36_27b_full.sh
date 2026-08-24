@@ -8,12 +8,12 @@
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:nvidia_h200:1
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/qwen36-vllm-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/qwen36-vllm-%j.err
+#SBATCH --output=qwen36-vllm-%j.out
+#SBATCH --error=qwen36-vllm-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_PATH="$PROJECT_DIR/images/vllm-v0.26.0.sif"
 MODEL_PATH="$PROJECT_DIR/models/Qwen3.6-27B"
 

@@ -7,12 +7,12 @@
 #SBATCH --mem=8G
 #SBATCH --time=01:00:00
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/download-mistral32-24b-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/download-mistral32-24b-%j.err
+#SBATCH --output=download-mistral32-24b-%j.out
+#SBATCH --error=download-mistral32-24b-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 
 IMAGE_PATH="$PROJECT_DIR/images/vllm-nightly.sif"
 

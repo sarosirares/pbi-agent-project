@@ -7,12 +7,12 @@
 #SBATCH --mem=8G
 #SBATCH --time=02:00:00
 
-#SBATCH --output=/projects/airi/srares/powerbi-agent/logs/download-nemotron3-%j.out
-#SBATCH --error=/projects/airi/srares/powerbi-agent/logs/download-nemotron3-%j.err
+#SBATCH --output=download-nemotron3-%j.out
+#SBATCH --error=download-nemotron3-%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="/projects/airi/srares/powerbi-agent"
+PROJECT_DIR="${POWERBI_AGENT_ROOT:?Set POWERBI_AGENT_ROOT to the HPC working directory before submitting the job.}"
 IMAGE_PATH="$PROJECT_DIR/images/vllm-v0.26.0.sif"
 
 MODEL_REPO="nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
