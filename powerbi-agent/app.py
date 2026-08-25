@@ -1,3 +1,4 @@
+from typing import Literal
 from pathlib import Path
 
 from fastapi import (
@@ -69,8 +70,20 @@ class ChatResponse(BaseModel):
     model: str
     classification: IntentResponse
     artifact: ArtifactResponse | None = None
+    report_review_status: str | None = None
     input_tokens: int | None = None
     output_tokens: int | None = None
+
+
+class ReportReviewRequest(BaseModel):
+    action: Literal["approve", "reject"]
+
+
+class ReportReviewResponse(BaseModel):
+    session_id: str
+    answer: str
+    artifact: ArtifactResponse | None = None
+    report_review_status: str | None = None
 
 
 class SessionSummary(BaseModel):
@@ -94,6 +107,7 @@ class SessionMessage(BaseModel):
 class SessionMessagesResponse(BaseModel):
     session_id: str
     messages: list[SessionMessage]
+    report_review_status: str | None = None
 
 
 @app.get(
@@ -277,6 +291,11 @@ def chat(
                 ),
             ),
             artifact=artifact_response,
+            report_review_status=(
+                agent.get_report_review_status(
+                    reply.session_id
+                )
+            ),
             input_tokens=reply.input_tokens,
             output_tokens=reply.output_tokens,
         )
@@ -292,6 +311,65 @@ def chat(
             status_code=502,
             detail=(
                 "Agent request failed: "
+                f"{type(exc).__name__}: {exc}"
+            ),
+        ) from exc
+
+
+@app.post(
+    "/reports/{session_id}/review",
+    response_model=ReportReviewResponse,
+)
+def review_report(
+    session_id: str,
+    request: ReportReviewRequest,
+) -> ReportReviewResponse:
+    try:
+        if request.action == "approve":
+            reply = agent.approve_pending_report(
+                session_id
+            )
+        else:
+            reply = agent.reject_pending_report(
+                session_id
+            )
+
+        artifact_response = None
+
+        if reply.artifact is not None:
+            artifact_response = ArtifactResponse(
+                filename=reply.artifact.filename,
+                download_url=(
+                    reply.artifact.download_url
+                ),
+            )
+
+        return ReportReviewResponse(
+            session_id=reply.session_id,
+            answer=reply.answer,
+            artifact=artifact_response,
+            report_review_status=(
+                agent.get_report_review_status(
+                    reply.session_id
+                )
+            ),
+        )
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        ) from exc
+
+    except Exception as exc:
+        agent.restore_pending_report_review(
+            session_id
+        )
+
+        raise HTTPException(
+            status_code=502,
+            detail=(
+                "Report review failed: "
                 f"{type(exc).__name__}: {exc}"
             ),
         ) from exc
@@ -353,6 +431,11 @@ def get_session_messages(
             SessionMessage(**message)
             for message in messages
         ],
+        report_review_status=(
+            agent.get_report_review_status(
+                session_id
+            )
+        ),
     )
 
 

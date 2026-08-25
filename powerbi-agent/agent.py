@@ -26,6 +26,13 @@ from project_inspection_context import (
 from semantic_model_loader import (
     load_semantic_model_context,
 )
+from semantic_model_sql_table import (
+    build_semantic_model_sql_table_spec,
+)
+from database_query_models import DatabaseQueryPlan
+from database_schema_loader import (
+    load_database_schema_context,
+)
 
 
 SYSTEM_PROMPT = """
@@ -122,6 +129,13 @@ class AgentReply:
     artifact: AgentArtifact | None
     input_tokens: int | None
     output_tokens: int | None
+
+
+@dataclass(frozen=True)
+class ReportReviewReply:
+    session_id: str
+    answer: str
+    artifact: AgentArtifact | None
 
 
 class PowerBIAgent:
@@ -785,6 +799,312 @@ class PowerBIAgent:
             )
         )
 
+        if not report_data_plan.semantic_table_name:
+            raise RuntimeError(
+                "Database query plan contains no "
+                "semantic table name."
+            )
+
+        query_review = (
+            build_semantic_model_sql_table_spec(
+                plan=report_data_plan,
+                schema_context=(
+                    planning.schema_context
+                ),
+                table_name=(
+                    report_data_plan
+                    .semantic_table_name
+                ),
+            )
+        )
+
+        session_artifacts_dir.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        pending_review_path = (
+            session_artifacts_dir
+            / "pending_report_query.json"
+        )
+
+        pending_review = {
+            "status": "pending",
+            "report_request": (
+                original_report_request
+                or message
+            ),
+            "pipeline_request": (
+                effective_request
+            ),
+            "report_follow_ups": (
+                report_follow_ups
+                or []
+            ),
+            "database_query_plan": (
+                report_data_plan.model_dump()
+            ),
+            "sql": query_review.sql,
+            "parameters": (
+                query_review.parameters
+            ),
+        }
+
+        pending_review_path.write_text(
+            json.dumps(
+                pending_review,
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+        answer_parts = [
+            (
+                "Interogarea pentru raport a fost "
+                "generata si asteapta verificarea "
+                "umana."
+            ),
+            "```sql\n"
+            f"{query_review.sql}\n"
+            "```",
+        ]
+
+        if query_review.parameters:
+            parameters_json = json.dumps(
+                query_review.parameters,
+                ensure_ascii=False,
+            )
+
+            answer_parts.append(
+                "Parametri SQL: "
+                f"`{parameters_json}`"
+            )
+
+        answer_parts.append(
+            "Interogarea trebuie aprobata mai intai."
+        )
+
+        answer = "\n\n".join(
+            answer_parts
+        )
+
+        self.conversation_store.save_exchange(
+            session_id=session_id,
+            user_message=message,
+            assistant_message=answer,
+        )
+
+        return AgentReply(
+            session_id=session_id,
+            answer=answer,
+            model=self.llm.model_name,
+            intent=intent_result,
+            artifact=None,
+            input_tokens=None,
+            output_tokens=None,
+        )
+
+    def get_report_review_status(
+        self,
+        session_id: str,
+    ) -> str | None:
+        pending_review_path = (
+            self.artifacts_dir
+            / session_id
+            / "pending_report_query.json"
+        )
+
+        if not pending_review_path.is_file():
+            return None
+
+        pending_review = json.loads(
+            pending_review_path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        status = pending_review.get("status")
+
+        if status not in {
+            "pending",
+            "generating",
+            "approved",
+            "rejected",
+        }:
+            return None
+
+        return status
+
+    def has_pending_report_review(
+        self,
+        session_id: str,
+    ) -> bool:
+        return (
+            self.get_report_review_status(
+                session_id
+            )
+            == "pending"
+        )
+
+    def restore_pending_report_review(
+        self,
+        session_id: str,
+    ) -> None:
+        pending_review_path = (
+            self.artifacts_dir
+            / session_id
+            / "pending_report_query.json"
+        )
+
+        if not pending_review_path.is_file():
+            return
+
+        pending_review = json.loads(
+            pending_review_path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        if (
+            pending_review.get("status")
+            != "generating"
+        ):
+            return
+
+        pending_review["status"] = "pending"
+
+        pending_review_path.write_text(
+            json.dumps(
+                pending_review,
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+    def approve_pending_report(
+        self,
+        session_id: str,
+    ) -> ReportReviewReply:
+        session_artifacts_dir = (
+            self.artifacts_dir
+            / session_id
+        )
+
+        pending_review_path = (
+            session_artifacts_dir
+            / "pending_report_query.json"
+        )
+
+        if not pending_review_path.is_file():
+            raise ValueError(
+                "No pending report query was found."
+            )
+
+        pending_review = json.loads(
+            pending_review_path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        if pending_review.get("status") != "pending":
+            raise ValueError(
+                "The report query is no longer pending review."
+            )
+
+        pending_review["status"] = "generating"
+
+        pending_review_path.write_text(
+            json.dumps(
+                pending_review,
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+        plan_payload = pending_review.get(
+            "database_query_plan"
+        )
+
+        if not isinstance(plan_payload, dict):
+            raise RuntimeError(
+                "Pending report review contains "
+                "no valid query plan."
+            )
+
+        report_data_plan = (
+            DatabaseQueryPlan.model_validate(
+                plan_payload
+            )
+        )
+
+        if not report_data_plan.semantic_table_name:
+            raise RuntimeError(
+                "Pending report query contains no "
+                "semantic table name."
+            )
+
+        schema_context = (
+            load_database_schema_context()
+        )
+
+        query_review = (
+            build_semantic_model_sql_table_spec(
+                plan=report_data_plan,
+                schema_context=schema_context,
+                table_name=(
+                    report_data_plan
+                    .semantic_table_name
+                ),
+            )
+        )
+
+        if (
+            query_review.sql
+            != pending_review.get("sql")
+            or query_review.parameters
+            != pending_review.get("parameters")
+        ):
+            raise RuntimeError(
+                "The pending report query no longer "
+                "matches the reviewed query."
+            )
+
+        server = os.getenv(
+            "SQLSERVER_SERVER"
+        )
+
+        if not server:
+            raise RuntimeError(
+                "SQLSERVER_SERVER is not configured."
+            )
+
+        database = os.getenv(
+            "SQLSERVER_DATABASE"
+        )
+
+        if not database:
+            raise RuntimeError(
+                "SQLSERVER_DATABASE is not configured."
+            )
+
+        template_path = (
+            Path(__file__).resolve().parent
+            / "templates"
+            / "blank_powerbi_project"
+        )
+
+        if not template_path.is_dir():
+            raise RuntimeError(
+                "Blank Power BI template was not found: "
+                f"{template_path}"
+            )
+
         data_project = (
             build_powerbi_sql_project(
                 template_path=template_path,
@@ -793,16 +1113,27 @@ class PowerBIAgent:
                     / "src"
                 ),
                 plan=report_data_plan,
-                schema_context=(
-                    planning.schema_context
-                ),
+                schema_context=schema_context,
                 server=server,
                 database=database,
             )
         )
 
+        pipeline_request = pending_review.get(
+            "pipeline_request"
+        )
+
+        if not isinstance(
+            pipeline_request,
+            str,
+        ) or not pipeline_request.strip():
+            raise RuntimeError(
+                "Pending report review contains no "
+                "valid pipeline request."
+            )
+
         result = generate_powerbi_project(
-            user_request=effective_request,
+            user_request=pipeline_request,
             semantic_model_path=(
                 data_project.semantic_model_path
             ),
@@ -824,17 +1155,43 @@ class PowerBIAgent:
                 f"STDERR:\n{result.cli_stderr}"
             )
 
+        report_request = pending_review.get(
+            "report_request"
+        )
+
+        if not isinstance(
+            report_request,
+            str,
+        ) or not report_request.strip():
+            raise RuntimeError(
+                "Pending report review contains no "
+                "valid report request."
+            )
+
+        report_follow_ups = pending_review.get(
+            "report_follow_ups",
+            [],
+        )
+
+        if not isinstance(
+            report_follow_ups,
+            list,
+        ) or not all(
+            isinstance(item, str)
+            for item in report_follow_ups
+        ):
+            raise RuntimeError(
+                "Pending report review contains "
+                "invalid follow-up history."
+            )
+
         latest_report_context = {
             "project_directory": (
                 result.project_path.name
             ),
-            "report_request": (
-                original_report_request
-                or message
-            ),
+            "report_request": report_request,
             "report_follow_ups": (
                 report_follow_ups
-                or []
             ),
             "database_query_plan": (
                 report_data_plan.model_dump()
@@ -859,6 +1216,18 @@ class PowerBIAgent:
             encoding="utf-8",
         )
 
+        pending_review["status"] = "approved"
+
+        pending_review_path.write_text(
+            json.dumps(
+                pending_review,
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
         encoded_filename = quote(
             result.zip_path.name
         )
@@ -872,6 +1241,7 @@ class PowerBIAgent:
         )
 
         answer = (
+            "Interogarea a fost aprobata. "
             "Raportul Power BI a fost generat "
             "si validat.\n\n"
             f"[Descarca proiectul Power BI (ZIP)]"
@@ -880,18 +1250,68 @@ class PowerBIAgent:
 
         self.conversation_store.save_exchange(
             session_id=session_id,
-            user_message=message,
+            user_message="Aproba interogarea",
             assistant_message=answer,
         )
 
-        return AgentReply(
+        return ReportReviewReply(
             session_id=session_id,
             answer=answer,
-            model=self.llm.model_name,
-            intent=intent_result,
             artifact=artifact,
-            input_tokens=None,
-            output_tokens=None,
+        )
+
+    def reject_pending_report(
+        self,
+        session_id: str,
+    ) -> ReportReviewReply:
+        pending_review_path = (
+            self.artifacts_dir
+            / session_id
+            / "pending_report_query.json"
+        )
+
+        if not pending_review_path.is_file():
+            raise ValueError(
+                "No pending report query was found."
+            )
+
+        pending_review = json.loads(
+            pending_review_path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        if pending_review.get("status") != "pending":
+            raise ValueError(
+                "The report query is no longer pending review."
+            )
+
+        pending_review["status"] = "rejected"
+
+        pending_review_path.write_text(
+            json.dumps(
+                pending_review,
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+        answer = (
+            "Interogarea a fost respinsa."
+        )
+
+        self.conversation_store.save_exchange(
+            session_id=session_id,
+            user_message="Respinge interogarea",
+            assistant_message=answer,
+        )
+
+        return ReportReviewReply(
+            session_id=session_id,
+            answer=answer,
+            artifact=None,
         )
 
     def list_sessions(
