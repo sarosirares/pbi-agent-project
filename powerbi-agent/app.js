@@ -291,6 +291,72 @@ async function readErrorResponse(response) {
 }
 
 
+async function deleteSession(sessionToDelete) {
+    const isChatPending = pendingChatRequests.has(
+        sessionToDelete
+    );
+
+    const reviewStatus = reportReviewStatuses.get(
+        sessionToDelete
+    );
+
+    const isReportBusy = (
+        reviewStatus === "generating"
+        || reviewStatus === "rejecting"
+    );
+
+    if (isChatPending || isReportBusy) {
+        statusMessage.textContent =
+            "Conversatia nu poate fi stearsa cat timp exista o operatie in curs.";
+
+        return;
+    }
+
+    const confirmed = window.confirm(
+        "Stergi aceasta conversatie?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `/sessions/${sessionToDelete}`,
+            {
+                method: "DELETE",
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                await readErrorResponse(response)
+            );
+        }
+
+        pendingChatRequests.delete(sessionToDelete);
+        reportReviewStatuses.delete(sessionToDelete);
+
+        if (sessionId === sessionToDelete) {
+            sessionId = null;
+
+            sessionStorage.removeItem(
+                sessionStorageKey
+            );
+
+            removeReportReviewState();
+            showEmptyState();
+            updateActiveRequestState();
+        }
+
+        await loadSessions();
+    } catch (error) {
+        statusMessage.textContent =
+            `Nu s-a putut sterge conversatia: ${error.message}`;
+    }
+}
+
+
 async function loadSessions() {
     try {
         const response = await fetch("/sessions");
@@ -306,6 +372,10 @@ async function loadSessions() {
         sessionList.innerHTML = "";
 
         for (const session of data.sessions) {
+            const sessionRow = document.createElement("div");
+
+            sessionRow.className = "session-row";
+
             const button = document.createElement("button");
 
             button.type = "button";
@@ -331,7 +401,31 @@ async function loadSessions() {
                 },
             );
 
-            sessionList.appendChild(button);
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.type = "button";
+            deleteButton.className = "session-delete";
+            deleteButton.textContent = "×";
+            deleteButton.title = "Sterge conversatia";
+            deleteButton.setAttribute(
+                "aria-label",
+                "Sterge conversatia",
+            );
+
+            deleteButton.addEventListener(
+                "click",
+                async () => {
+                    await deleteSession(
+                        session.session_id
+                    );
+                },
+            );
+
+            sessionRow.appendChild(button);
+            sessionRow.appendChild(deleteButton);
+
+            sessionList.appendChild(sessionRow);
         }
     } catch (error) {
         statusMessage.textContent =

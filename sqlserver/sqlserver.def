@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: mcr.microsoft.com/mssql/server:2025-latest
+
+%post
+    echo "Removing OCI file capability metadata from sqlservr for Apptainer compatibility..."
+    setcap -r /opt/mssql/bin/sqlservr
+    echo "sqlservr file capability metadata removed."
+
+%test
+    /opt/mssql/bin/sqlservr --help >/dev/null 2>&1 || true
+
+%help
+    SQL Server 2025 image adapted for execution with Apptainer.

@@ -20,7 +20,7 @@ def connect_to_database() -> pyodbc.Connection:
     trusted_connection = os.getenv(
         "SQLSERVER_TRUSTED_CONNECTION",
         "yes",
-    )
+    ).strip().lower()
 
     encrypt = os.getenv(
         "SQLSERVER_ENCRYPT",
@@ -32,11 +32,30 @@ def connect_to_database() -> pyodbc.Connection:
         "yes",
     )
 
+    if trusted_connection in {
+        "yes",
+        "true",
+        "1",
+    }:
+        authentication = "Trusted_Connection=yes;"
+    else:
+        username = _required_env(
+            "SQLSERVER_USERNAME"
+        )
+        password = _required_env(
+            "SQLSERVER_PASSWORD"
+        )
+
+        authentication = (
+            f"UID={_odbc_value(username)};"
+            f"PWD={_odbc_value(password)};"
+        )
+
     connection_string = (
         f"DRIVER={{{driver}}};"
         f"SERVER={server};"
         f"DATABASE={database};"
-        f"Trusted_Connection={trusted_connection};"
+        f"{authentication}"
         f"Encrypt={encrypt};"
         f"TrustServerCertificate={trust_server_certificate};"
         "APP=PowerBIAgent;"
@@ -57,3 +76,8 @@ def _required_env(name: str) -> str:
         )
 
     return value
+
+
+def _odbc_value(value: str) -> str:
+    """Escape an ODBC connection string value."""
+    return "{" + value.replace("}", "}}") + "}"

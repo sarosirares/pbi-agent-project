@@ -1,338 +1,240 @@
 # Power BI AI Agent
 
-Proiect pentru interogarea unei baze de date SQL Server si generarea de rapoarte Power BI din cereri formulate in limbaj natural.
+Aplicatie pentru interogarea unei baze de date SQL Server si generarea de rapoarte Power BI din cereri formulate in limbaj natural.
 
-Aplicatia foloseste Qwen3.6-27B servit prin vLLM. Modelul este folosit pentru interpretarea cererilor si pentru planificarea semantica, iar codul Python valideaza query-urile, controleaza accesul la baza de date si construieste proiectele Power BI.
+Aplicatia foloseste Qwen3.6-27B prin vLLM. Modelul, backend-ul FastAPI si SQL Server ruleaza pe infrastructura HPC, iar utilizatorul acceseaza aplicatia din browser prin SSH.
 
-## Continutul repository-ului
-
-Repository-ul contine trei zone principale:
-
-- `powerbi-agent/` - aplicatia curenta;
-- `Testing/` - scripturi si rezultate folosite pentru testarea modelelor;
-- `PowerBI Models/` - proiecte Power BI folosite ca exemple, baseline-uri si fisiere de verificare.
-
-Structura principala este:
+## Repository
 
 ```text
 pbi-agent-project/
-|-- powerbi-agent/
-|-- Testing/
-|-- PowerBI Models/
-`-- README.md
+    powerbi-agent/       aplicatia
+    Testing/             teste si benchmark-uri
+    PowerBI Models/      proiecte Power BI folosite pentru testare
+    README.md
 ```
-
-## Aplicatia
 
 Codul principal este in `powerbi-agent/`.
 
-Componentele importante sunt:
-
-- `app.py` - aplicatia FastAPI si endpoint-urile HTTP;
-- `agent.py` - orchestrarea cererilor si a raspunsurilor;
-- `llm_client.py` - clientul pentru endpoint-ul vLLM;
-- `intent_classifier.py` - clasificarea intentiei si rezolvarea follow-up-urilor;
-- `database_schema_*` - citirea si selectia metadata SQL Server;
-- `database_query_*` - planificarea, validarea, randarea si executia query-urilor;
-- `database_semantic_context.py` - context semantic suplimentar pentru concepte business si relatii aprobate;
-- `report_planner.py` - planificarea raportului;
-- `semantic_model_*` - generarea modelului semantic Power BI;
-- `pbir_*` - generarea si validarea modificarilor PBIR;
-- `powerbi_sql_project_builder.py` - construirea proiectului PBIP final;
-- `templates/blank_powerbi_project/` - proiectul Power BI de baza folosit la generare;
-- `pbir_examples/` - exemple PBIR folosite pentru tipurile de vizualuri suportate.
-
-Aplicatia poate in prezent sa:
-
-- raspunda la intrebari despre date din SQL Server;
-- foloseasca agregari, filtre, sortari si metrici derivate;
-- calculeze procente si agregari conditionale;
-- foloseasca JOIN-uri pe relatii aprobate;
-- mentina contextul pentru follow-up-uri;
-- genereze proiecte Power BI;
-- modifice logic ultimul raport generat in aceeasi sesiune;
-- valideze query-urile si modificarile PBIR inainte de executie sau scriere.
-
 ## Cerinte
 
-Pentru backend:
+Pe infrastructura HPC sunt necesare:
 
-```text
-Python 3.13
-ODBC Driver 18 for SQL Server
-SQL Server
-endpoint vLLM compatibil OpenAI
-```
+- SLURM;
+- Apptainer;
+- Qwen3.6-27B;
+- vLLM;
+- SQL Server;
+- Python;
+- ODBC Driver 18 for SQL Server;
+- Node.js;
+- Power BI Report Authoring CLI.
 
-Pentru verificarea rapoartelor generate este necesar Power BI Desktop.
+Pe calculatorul utilizatorului sunt necesare:
 
-Dependentele Python sunt in:
+- SSH;
+- un browser web;
+- Power BI Desktop pentru deschiderea rapoartelor generate.
 
-```text
-powerbi-agent/requirements.txt
-```
-
-Dependentele frontend sunt in:
-
-```text
-powerbi-agent/package.json
-```
-
-## Instalare
-
-Din directorul `powerbi-agent/`:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-```
-
-Pentru dependentele frontend:
-
-```powershell
-npm install
-```
+Backend-ul si SQL Server nu trebuie sa ruleze local pe calculatorul utilizatorului.
 
 ## Configurare
 
-In `powerbi-agent/` exista fisierul:
-
-```text
-.env.example
-```
-
-Acesta trebuie copiat ca `.env` si completat pentru mediul local.
+Aplicatia foloseste un fisier `.env`.
 
 Exemplu:
 
 ```env
-VLLM_BASE_URL=http://localhost:8000/v1
+VLLM_BASE_URL=http://127.0.0.1:8000/v1
 VLLM_API_KEY=EMPTY
 VLLM_MODEL=Qwen3.6-27B
 
-SQLSERVER_SERVER=<SQL_SERVER_INSTANCE>
+SQLSERVER_SERVER=127.0.0.1,1433
 SQLSERVER_DATABASE=<DATABASE_NAME>
 SQLSERVER_DRIVER=ODBC Driver 18 for SQL Server
-SQLSERVER_TRUSTED_CONNECTION=yes
+SQLSERVER_TRUSTED_CONNECTION=no
+SQLSERVER_USERNAME=<USERNAME>
+SQLSERVER_PASSWORD=<PASSWORD>
 SQLSERVER_ENCRYPT=yes
 SQLSERVER_TRUST_SERVER_CERTIFICATE=yes
 ```
 
-Fisierul `.env` nu trebuie versionat.
+Contul SQL folosit de aplicatie trebuie sa aiba acces read-only.
 
 ## Pornire
 
-Din `powerbi-agent/`:
+### Prima configurare
 
-```powershell
-.\.venv\Scripts\Activate.ps1
-python -m uvicorn app:app --reload --host 127.0.0.1 --port 8080
+Pentru SQL Server:
+
+```bash
+cd sqlserver
+cp sqlserver.env.example sqlserver.env
+chmod 600 sqlserver.env
 ```
 
-Interfata este apoi disponibila la:
+Se completeaza `sqlserver.env` cu parola SQL Server.
 
-```text
-http://127.0.0.1:8080
+Pentru backend se copiaza:
+
+```bash
+cd ../powerbi-agent
+cp .env.example .env
+chmod 600 .env
 ```
 
-Health check:
+si se completeaza configuratia SQL Server.
+
+Imaginile Apptainer se construiesc o singura data:
+
+```bash
+cd powerbi-agent
+sbatch build_backend.sh
+```
+
+```bash
+cd ../sqlserver
+sbatch build_sqlserver.sh
+```
+
+### Pornirea unei sesiuni de test
+
+Se pornesc cele trei componente:
+
+```bash
+cd sqlserver
+sbatch run_sqlserver.sh
+```
+
+```bash
+cd ../Testing/Tests/cluster
+sbatch run_vllm_qwen36_27b.sh
+```
+
+```bash
+cd ../../../powerbi-agent
+sbatch run_backend.sh
+```
+
+Job-urile trebuie sa ramana active pe durata testarii.
+
+Backend-ul poate fi verificat cu:
+
+```bash
+curl http://<COMPUTE_NODE>:8080/health
+```
+
+Raspuns asteptat:
+
+```json
+{"status":"ok"}
+```
+
+## Acces din browser
+
+De pe calculatorul client se creeaza un SSH tunnel catre backend:
+
+```bash
+ssh -N -L 8081:<COMPUTE_NODE>:8080 <HPC_HOST>
+```
+
+Aplicatia poate fi apoi accesata la:
 
 ```text
-GET /health
+http://127.0.0.1:8081
 ```
 
 ## Utilizare
 
-Aplicatia primeste cereri in limbaj natural.
-
-Exemple de query-uri:
+Aplicatia accepta intrebari in limbaj natural, de exemplu:
 
 ```text
-Care este rata globala de promovare?
+Care este valoarea totala a taxelor studentilor?
 ```
+
+sau:
 
 ```text
 Care este rata de promovare pentru fiecare disciplina?
 ```
 
-```text
-Compara rata de promovare dintre programele de studiu.
-```
+Conversatiile sunt pastrate intre sesiuni si pot fi sterse direct din sidebar.
+
+## Generarea unui raport
+
+Exemplu:
 
 ```text
-Care este situatia scolara a lui Vlad Munteanu?
+Creeaza un raport Power BI despre taxele studentilor, cu valoarea totala,
+distributia pe categorii si un slicer dupa tipul de finantare.
 ```
 
-Follow-up-urile pot folosi contextul conversatiei:
+Fluxul este:
 
 ```text
-Care este valoarea totala a taxelor studentilor?
-Dar media?
+cerere
+-> planificare
+-> generare si validare SQL
+-> afisare SQL in chatbot
+-> Approve / Reject
+-> generare raport
 ```
 
-Pentru generarea unui raport:
+Raportul este generat numai dupa `Approve`.
+
+Dupa aprobare este folosit acelasi query care a fost afisat si verificat. SQL-ul nu este regenerat de model.
+
+Rezultatul este un proiect Power BI (`PBIP`) livrat ca arhiva ZIP.
+
+## Deschiderea raportului in Power BI Desktop
+
+SQL Server ruleaza pe HPC, iar Power BI Desktop ruleaza pe calculatorul utilizatorului.
+
+Pentru refresh-ul raportului se creeaza un al doilea SSH tunnel:
+
+```bash
+ssh -N -L 1433:<COMPUTE_NODE>:1433 <HPC_HOST>
+```
+
+In Power BI Desktop conexiunea este:
 
 ```text
-Creeaza-mi un raport Power BI despre situatia scolara a studentilor, pe o singura pagina.
-Vreau sa vad numarul total de rezultate academice, nota medie pentru fiecare disciplina
-si sa pot filtra raportul dupa programul de studiu.
+127.0.0.1,1433
 ```
 
-Pentru modificarea raportului:
+La autentificare se foloseste optiunea `Database` si credentialele SQL Server read-only furnizate pentru testare.
 
-```text
-Pastreaza restul raportului si arata nota medie pe discipline intr-un grafic,
-apoi adauga un tabel cu studentii si media notelor fiecaruia.
-```
+## Functionalitati
 
-Aplicatia genereaza o arhiva ZIP. Proiectul se extrage si fisierul `.pbip` se deschide in Power BI Desktop.
+Versiunea curenta suporta:
 
-## Accesul la SQL Server
-
-Modelul nu executa SQL direct.
-
-Pentru fiecare cerere despre date, aplicatia:
-
-1. selecteaza partea relevanta din schema;
-2. genereaza un plan intermediar de query;
-3. valideaza tabelele, coloanele, filtrele si agregarile;
-4. valideaza relatiile folosite pentru JOIN;
-5. genereaza SQL parametrizat;
-6. executa query-ul prin Python;
-7. transmite rezultatul catre model pentru formularea raspunsului.
-
-Query-urile directe sunt limitate ca numar de randuri.
-
-Pentru dataseturile folosite de rapoarte, limita poate fi eliminata explicit pentru a evita trunchierea datelor.
-
-## Relatii intre tabele
-
-Baza folosita in dezvoltare nu declara toate relatiile prin FOREIGN KEY-uri.
-
-Din acest motiv, aplicatia nu permite modelului sa inventeze conditii de JOIN.
-
-Relatiile care pot fi folosite in query-uri multi-table sunt definite separat si validate de Python.
-
-Pentru alte baze de date, aceste relatii trebuie revizuite sau inlocuite cu relatiile reale ale mediului respectiv.
-
-## Context semantic
-
-Unele concepte nu pot fi interpretate sigur doar din numele tabelelor si coloanelor.
-
-`database_semantic_context.py` permite adaugarea unor informatii precum:
-
-- semnificatia unui camp;
-- denumirea folosita pentru un ID;
-- reguli business;
-- relatii permise.
-
-Pentru un deployment real este preferabil ca aceste informatii sa provina din documentatia bazei, dintr-un dictionar de date sau din SQL Server extended properties.
-
-## Generarea Power BI
-
-Raportul este construit pornind de la proiectul din:
-
-```text
-powerbi-agent/templates/blank_powerbi_project/
-```
-
-Aplicatia adauga modelul semantic necesar si apoi genereaza modificarile PBIR.
-
-Inainte de aplicare sunt validate:
-
-- fisierele tinta;
-- structura JSON;
-- schema PBIR;
-- referintele la modelul semantic;
-- structura paginilor si vizualurilor;
-- layout-ul vizualurilor.
-
-Tipurile de vizualuri testate in versiunea curenta sunt:
-
-- card;
-- clustered bar chart;
-- line chart;
-- pie chart;
-- slicer;
-- table.
+- intrebari in limbaj natural despre SQL Server;
+- agregari, filtre, procente si metrici derivate;
+- query-uri multi-table pe relatii aprobate;
+- follow-up-uri in aceeasi conversatie;
+- validarea query-urilor SQL;
+- aprobarea sau respingerea query-ului unui raport;
+- generarea proiectelor Power BI;
+- generarea arhivelor PBIP ZIP;
+- card, bar chart, line chart, pie chart, slicer si table;
+- persistenta si stergerea conversatiilor.
 
 ## Testing
 
-Directorul `Testing/` contine materialele folosite in etapa de evaluare a modelelor si a pipeline-ului.
+Directorul `Testing/` contine scripturile si rezultatele folosite pentru evaluarea modelelor.
 
-### `Testing/Tests/cluster/`
-
-Contine scripturi SLURM / Apptainer pentru construirea imaginilor, descarcarea modelelor si pornirea serverelor vLLM pe HPC.
-
-Scripturile trebuie adaptate la mediul in care sunt rulate. Pentru caile de lucru HPC se foloseste variabila:
-
-```bash
-POWERBI_AGENT_ROOT
-```
-
-### `Testing/Tests/tests/`
-
-Contine benchmark-uri si rezultate pentru modelele evaluate.
-
-Au fost testate, intre altele:
-
-- Granite 4.1 8B;
-- Mistral Small 3.2 24B;
-- NVIDIA Nemotron 3 Nano 30B-A3B;
-- Qwen3-Coder-30B-A3B-Instruct;
-- Qwen3.5-9B;
-- Qwen3.6-27B.
-
-Detaliile pentru fiecare rulare sunt in fisierele din `Testing/Tests/tests/`.
-
-### `Testing/Model date/`
-
-Contine copii ale unor proiecte Power BI folosite in rularile de test.
-
-## PowerBI Models
-
-Directorul `PowerBI Models/` contine proiecte PBIP folosite in timpul dezvoltarii pentru:
-
-- verificarea structurii PBIP;
-- inspectarea fisierelor PBIR si TMDL;
-- obtinerea unor exemple de vizualuri;
-- verificare manuala in Power BI Desktop.
-
-Aceste fisiere nu sunt necesare pentru rularea backend-ului, dar au fost pastrate ca material de test si referinta.
-
-## Persistenta conversatiilor
-
-Conversatiile sunt salvate local in:
+Modelul folosit in versiunea curenta este:
 
 ```text
-powerbi-agent/data/conversations.db
+Qwen3.6-27B
 ```
 
-Fisierul este runtime data si nu trebuie adaugat in Git.
+## Limitari
 
-Contextul unei sesiuni este folosit si pentru follow-up-urile referitoare la ultimul raport generat.
+Versiunea curenta este un prototip.
 
-## Limitari cunoscute
-
-Versiunea curenta este un prototip functional.
-
-Cateva limitari importante:
-
-- contextul semantic trebuie adaptat la baza de date tinta;
-- relatiile care nu sunt declarate prin FOREIGN KEY trebuie configurate explicit;
-- JOIN-urile sunt restrictionate intentionat;
-- follow-up-ul pentru un raport regenereaza proiectul pe baza starii logice curente;
-- modificarile manuale facute ulterior in Power BI Desktop nu sunt sincronizate inapoi in agent;
-- interfata web este inca una de dezvoltare;
-
-## Mentenanta
-
-La modificarea proiectului este util sa se pastreze separarea dintre:
-
-- interpretarea semantica, facuta de model;
-- regulile obiective si de securitate, implementate in Python;
-- metadata business, pastrata separat;
-- erorile istorice, transformate in teste de regresie atunci cand este posibil.
-
-In special, query-urile generate de model si modificarile PBIR nu trebuie aplicate fara validare.
+- componentele HPC ruleaza ca job-uri SLURM, nu ca servicii permanente;
+- tunelurile SSH trebuie sa ramana active in timpul testarii;
+- Power BI Desktop este necesar pentru deschiderea raportului final;
+- relatiile si contextul semantic trebuie adaptate pentru o baza de date noua;
+- modificarile facute manual ulterior in Power BI Desktop nu sunt sincronizate inapoi in agent.

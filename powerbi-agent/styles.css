@@ -278,3 +278,37 @@ header p {
         max-width: 90%;
     }
 }
+
+.session-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.session-row .session-item {
+    flex: 1;
+    min-width: 0;
+}
+
+.session-delete {
+    flex: 0 0 auto;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 18px;
+    line-height: 1;
+    padding: 4px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.55;
+}
+
+.session-delete:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.session-delete:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}

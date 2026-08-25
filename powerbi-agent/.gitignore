@@ -11,6 +11,7 @@ __pycache__/
 
 artifacts/
 logs/
+
 data/*.db
 data/*.db-*
 data/*.sqlite
@@ -19,6 +20,13 @@ data/*.sqlite3
 node_modules/
 
 experiments/
+
+*.sif
+*.bak
+slurm-*.out
+
+**/sqlserver.env
+**/data_failed_init_*/
 
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
